@@ -27,6 +27,20 @@ class MainActivity : AppCompatActivity() {
             putToClipboard(text)
         }
 
+        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.radioButton_dominate -> {
+                    adapter.coloringMethod = ColoringMethod.dominantColor
+                }
+                R.id.radioButton_random -> {
+                    adapter.coloringMethod = ColoringMethod.random
+                }
+                else -> {
+                    throw IllegalStateException("Unknown RadioButton for coloring method")
+                }
+            }
+        }
+
     }
 
     fun putToClipboard(text: String) {
@@ -38,10 +52,10 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val LABEL_CLIPBOARD_DATA = "app_color_list"
 
-        fun appListToTSV(apps: List<App>): String {
+        fun appListToTSV(appInfos: List<AppInfo>): String {
             val buf = StringBuilder()
-            for (app in apps) {
-                buf.append("%s\t%X\n".format(app.name, app.dominantColor.color))
+            for (app in appInfos) {
+                buf.append("%s\t%X\n".format(app.name, ColoringMethod.color(app, ColoringMethod.dominantColor)))
             }
             return buf.toString()
         }

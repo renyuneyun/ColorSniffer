@@ -13,12 +13,19 @@ import androidx.recyclerview.widget.RecyclerView
 import java.lang.ref.WeakReference
 
 
-class MyAdapter(val context: Context) : RecyclerView.Adapter<MyViewHolder>() {
+class MyAdapter(val context: Context, coloringMethod: ColoringMethod) : RecyclerView.Adapter<MyViewHolder>() {
 
-    val items: ArrayList<App>
+    var coloringMethod: ColoringMethod = coloringMethod
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+    val items: ArrayList<AppInfo>
     var size: Int
         private set
-    val loadAppTask: LoadAppTask
+    private val loadAppTask: LoadAppTask
+
+    constructor(context: Context): this(context, ColoringMethod.dominantColor)
 
     init {
         val pm = context.packageManager
@@ -42,9 +49,8 @@ class MyAdapter(val context: Context) : RecyclerView.Adapter<MyViewHolder>() {
         while (loadAppTask.curr < position) {
             Thread.sleep(500)  // TODO: fine grained wait (e.g. use lock)
         }
-        val app: App = items[position]
-        holder.imageView.setImageDrawable(app.icon)
-        holder.imageView2.setImageDrawable(app.dominantColor)
+        val appInfo: AppInfo = items[position]
+        holder.fillWith(appInfo, coloringMethod)
     }
 
     fun waitForFinish() {
@@ -64,7 +70,7 @@ class MyAdapter(val context: Context) : RecyclerView.Adapter<MyViewHolder>() {
                 adapter.get()?.let {
                     if (packageInfo.name == null) {
                     } else {
-                        it.items.add(App(it.context, packageInfo))
+                        it.items.add(AppInfo(it.context, packageInfo))
                         curr++
                     }
                 }
