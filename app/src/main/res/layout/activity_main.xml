@@ -37,6 +37,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Random Color" />
+
+        <RadioButton
+            android:id="@+id/radioButton_vibrant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Vibrant Color" />
     </RadioGroup>
 
     <androidx.recyclerview.widget.RecyclerView

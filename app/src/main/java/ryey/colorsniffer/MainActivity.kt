@@ -35,6 +35,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.radioButton_random -> {
                     adapter.coloringMethod = ColoringMethod.random
                 }
+                R.id.radioButton_vibrant -> {
+                    adapter.coloringMethod = ColoringMethod.vibrantColor
+                }
                 else -> {
                     throw IllegalStateException("Unknown RadioButton for coloring method")
                 }
