@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="size_icon">48dp</dimen>
+    <dimen name="size_color">24dp</dimen>
+    <dimen name="margin_horizontal">8dp</dimen>
+    <dimen name="margin_vertical">4dp</dimen>
+
+</resources>
