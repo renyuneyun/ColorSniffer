@@ -6,11 +6,14 @@ import android.graphics.drawable.Drawable
 
 class LauncherActivityInfo {
 
-    val name: String
+    val name: CharSequence
+    val klass: String
     val icon: Drawable
 
     constructor(context: Context, activityInfo: ActivityInfo) {
-        name = activityInfo.name
-        icon = activityInfo.loadIcon(context.packageManager)
+        val pm = context.packageManager
+        name = activityInfo.loadLabel(pm)
+        klass = activityInfo.name
+        icon = activityInfo.loadIcon(pm)
     }
 }

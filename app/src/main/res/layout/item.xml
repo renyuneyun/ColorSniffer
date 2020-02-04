@@ -22,7 +22,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imageView_icon"
                 android:layout_width="@dimen/size_icon"
                 android:layout_height="@dimen/size_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -36,22 +36,34 @@
                 android:id="@+id/linearLayout2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                app:layout_constraintEnd_toStartOf="@+id/imageView_color"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/imageView_icon"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/textView_appName"
+                    style="@style/AppTheme.AppName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="appName" />
+
+                <TextView
+                    android:id="@+id/textView_className"
+                    style="@style/AppTheme.ClassName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="className" />
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/imageView_color"
                 android:layout_width="@dimen/size_color"
                 android:layout_height="@dimen/size_color"
                 app:layout_constraintBottom_toBottomOf="parent"
