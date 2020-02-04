@@ -11,10 +11,10 @@ class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val imageView: ImageView = itemView.findViewById(R.id.imageView)
     val imageView2: ImageView = itemView.findViewById(R.id.imageView2)
 
-    fun fillWith(appInfo: AppInfo, coloringMethod: ColoringMethod) {
-        textView_appName.text = appInfo.name
-        imageView.setImageDrawable(appInfo.icon)
-        imageView2.setImageDrawable(ColoringMethod.colorDrawable(appInfo, coloringMethod))
+    fun fillWith(launcherActivityInfo: LauncherActivityInfo, coloringMethod: ColoringMethod) {
+        textView_appName.text = launcherActivityInfo.name
+        imageView.setImageDrawable(launcherActivityInfo.icon)
+        imageView2.setImageDrawable(ColoringMethod.colorDrawable(launcherActivityInfo, coloringMethod))
     }
 
 }

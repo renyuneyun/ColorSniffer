@@ -19,10 +19,10 @@ enum class ColoringMethod {
 
         private val defaultColor = ResourcesCompat.getColor(Resources.getSystem(), android.R.color.black, null)
 
-        fun color(appInfo: AppInfo, coloringMethod: ColoringMethod): Int {
+        fun color(launcherActivityInfo: LauncherActivityInfo, coloringMethod: ColoringMethod): Int {
             return when (coloringMethod) {
                 dominantColor -> {
-                    val p = Palette.from(appInfo.icon.toBitmap()).generate()
+                    val p = Palette.from(launcherActivityInfo.icon.toBitmap()).generate()
                     p.getDominantColor(defaultColor)
                 }
                 random -> {
@@ -30,14 +30,14 @@ enum class ColoringMethod {
                     Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
                 }
                 vibrantColor -> {
-                    val p = Palette.from(appInfo.icon.toBitmap()).generate()
+                    val p = Palette.from(launcherActivityInfo.icon.toBitmap()).generate()
                     p.getVibrantColor(defaultColor)
                 }
             }
         }
 
-        fun colorDrawable(appInfo: AppInfo, coloringMethod: ColoringMethod): ColorDrawable {
-            return ColorDrawable(color(appInfo, coloringMethod))
+        fun colorDrawable(launcherActivityInfo: LauncherActivityInfo, coloringMethod: ColoringMethod): ColorDrawable {
+            return ColorDrawable(color(launcherActivityInfo, coloringMethod))
         }
     }
 }

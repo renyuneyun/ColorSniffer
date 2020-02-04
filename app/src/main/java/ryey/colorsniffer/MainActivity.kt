@@ -55,9 +55,9 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val LABEL_CLIPBOARD_DATA = "app_color_list"
 
-        fun appListToTSV(appInfos: List<AppInfo>): String {
+        fun appListToTSV(launcherActivityInfos: List<LauncherActivityInfo>): String {
             val buf = StringBuilder()
-            for (app in appInfos) {
+            for (app in launcherActivityInfos) {
                 buf.append("%s\t%X\n".format(app.name, ColoringMethod.color(app, ColoringMethod.dominantColor)))
             }
             return buf.toString()

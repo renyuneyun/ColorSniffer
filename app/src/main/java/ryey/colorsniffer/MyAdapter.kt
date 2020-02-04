@@ -1,8 +1,8 @@
 package ryey.colorsniffer
 
 import android.content.Context
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
+import android.content.Intent
+import android.content.pm.ResolveInfo
 import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.os.ConditionVariable
@@ -11,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import java.lang.ref.WeakReference
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MyAdapter(val context: Context, coloringMethod: ColoringMethod) : RecyclerView.Adapter<MyViewHolder>() {
@@ -20,7 +22,7 @@ class MyAdapter(val context: Context, coloringMethod: ColoringMethod) : Recycler
             field = value
             notifyDataSetChanged()
         }
-    val items: ArrayList<AppInfo>
+    val items: ArrayList<LauncherActivityInfo>
     var size: Int
         private set
     private val loadAppTask: LoadAppTask
@@ -29,11 +31,18 @@ class MyAdapter(val context: Context, coloringMethod: ColoringMethod) : Recycler
 
     init {
         val pm = context.packageManager
-        val packages = pm.getInstalledApplications(PackageManager.GET_META_DATA)
-        size = packages.size
+
+        val appList = Intent(Intent.ACTION_MAIN, null).let {
+            it.addCategory(Intent.CATEGORY_LAUNCHER)
+            val appList =
+                pm.queryIntentActivities(it, 0)
+            Collections.sort(appList, ResolveInfo.DisplayNameComparator(pm))
+            appList
+        }
+        size = appList.size
         items = ArrayList(size)
         loadAppTask = LoadAppTask(WeakReference(this))
-        loadAppTask.execute(packages)
+        loadAppTask.execute(appList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -49,42 +58,30 @@ class MyAdapter(val context: Context, coloringMethod: ColoringMethod) : Recycler
         while (loadAppTask.curr < position) {
             Thread.sleep(500)  // TODO: fine grained wait (e.g. use lock)
         }
-        val appInfo: AppInfo = items[position]
-        holder.fillWith(appInfo, coloringMethod)
+        val launcherActivityInfo: LauncherActivityInfo = items[position]
+        holder.fillWith(launcherActivityInfo, coloringMethod)
     }
 
     fun waitForFinish() {
         loadAppTask.waitForFinish()
     }
 
-    class LoadAppTask(private val adapter: WeakReference<MyAdapter>) : AsyncTask<List<ApplicationInfo>, Drawable, Unit>() {
+    class LoadAppTask(private val adapter: WeakReference<MyAdapter>) : AsyncTask<List<ResolveInfo>, Drawable, Unit>() {
 
         var curr: Int = -1
             private set
 
         private val finished: ConditionVariable = ConditionVariable(false)
 
-        override fun doInBackground(vararg packages: List<ApplicationInfo>) {
-            assert(packages.size == 1)
-            for (packageInfo in packages[0]) {
+        override fun doInBackground(vararg appList: List<ResolveInfo>) {
+            assert(appList.size == 1)
+            for (app in appList[0]) {
                 adapter.get()?.let {
-                    if (packageInfo.name == null) {
-                    } else {
-                        it.items.add(AppInfo(it.context, packageInfo))
-                        curr++
-                    }
+                    it.items.add(LauncherActivityInfo(it.context, app.activityInfo))
+                    curr++
                 }
             }
             finished.open()
-        }
-
-        override fun onPostExecute(result: Unit?) {
-            adapter.get()?.let {
-                if (curr != it.size) {
-                    it.size = curr
-                    it.notifyDataSetChanged()
-                }
-            }
         }
 
         fun waitForFinish() {
