@@ -1,11 +1,12 @@
-ColorSniffer
-- - - - - - 
+# ColorSniffer
 
-Get and export the main color of apps.
+------
+
+Get and export color codings for your apps.
 
 This app is intended to be used as a companion app for [Last Launcher](https://github.com/SubhamTyagi/Last-Launcher), as a easy method to obtain custom while regular coloring of apps.
 
-# Data format
+## Data format
 
 Currently it uses [TSV](https://en.wikipedia.org/wiki/Tab-separated_values). The header of the table is (not included in the exported data):
 
@@ -20,7 +21,7 @@ activityId	HexColor
 	- It ought to have **8** numbers
 	- It ought to be in the form of `AARRGGBB`
 
-# TODO
+## TODO
 
 - [ ] Wait for Last Launcher to support importing from clipboard (or similar, changing accordingly)
 - [ ] Provide a better UX (to be called from Last Launcher), possibily through `startActivityForResult()` and return the data through `Intent`?
