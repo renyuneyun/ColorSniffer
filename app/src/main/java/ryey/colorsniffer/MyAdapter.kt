@@ -6,6 +6,7 @@ import android.content.pm.ResolveInfo
 import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.os.ConditionVariable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -75,6 +76,8 @@ class MyAdapter(val context: Context, coloringMethod: ColoringMethod) : Recycler
 
         override fun doInBackground(vararg appList: List<ResolveInfo>) {
             assert(appList.size == 1)
+            Log.d("BGLoad", "loading app list")
+            val time1 = Date()
             for (app in appList[0]) {
                 adapter.get()?.let {
                     it.items.add(LauncherActivityInfo(it.context, app.activityInfo))
@@ -82,6 +85,9 @@ class MyAdapter(val context: Context, coloringMethod: ColoringMethod) : Recycler
                 }
             }
             finished.open()
+            val time2 = Date()
+            Log.d("BGLoad", "loaded app list, %d ms elapsed".format(time2.time - time1.time))
+
         }
 
         fun waitForFinish() {

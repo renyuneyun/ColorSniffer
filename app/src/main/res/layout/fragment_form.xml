@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ernestoyaquello.com.verticalstepperform.VerticalStepperFormView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/stepper_form"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:form_circle_background_color="@color/colorPrimary"
+    app:form_next_button_background_color="@color/colorPrimary"
+    app:form_next_button_pressed_background_color="@color/colorPrimaryDark"/>

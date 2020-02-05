@@ -3,6 +3,7 @@ package ryey.colorsniffer
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,6 +43,11 @@ class MainActivity : AppCompatActivity() {
                     throw IllegalStateException("Unknown RadioButton for coloring method")
                 }
             }
+        }
+
+        button_form.setOnClickListener {
+            val intent = Intent(this, FormActivity::class.java)
+            startActivity(intent)
         }
 
     }
