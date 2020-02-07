@@ -2,9 +2,10 @@ package ryey.colorsniffer
 
 import android.view.LayoutInflater
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import ernestoyaquello.com.verticalstepperform.Step
+import kotlin.math.roundToInt
 
 class PreviewStep(private val coloringMethodStep: ColoringMethodStep) : Step<Unit>("Preview coloring") {
 
@@ -32,7 +33,11 @@ class PreviewStep(private val coloringMethodStep: ColoringMethodStep) : Step<Uni
         val coloringMethod = coloringMethodStep.stepData
         adapter = MyAdapter(context, coloringMethod)
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.updateLayoutParams {
+            height = context.resources.displayMetrics.let {
+                (RECYCLER_VIEW_HEIGHT_IN_DP * it.density).roundToInt()
+            }
+        } //FIXME: temporary workaround. See https://github.com/ernestoyaquello/VerticalStepperForm/issues/88
         recyclerView.adapter = adapter
 
         return view
@@ -49,5 +54,9 @@ class PreviewStep(private val coloringMethodStep: ColoringMethodStep) : Step<Uni
     }
 
     override fun onStepClosed(animated: Boolean) {
+    }
+
+    companion object {
+        const val RECYCLER_VIEW_HEIGHT_IN_DP = 400
     }
 }

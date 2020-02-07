@@ -23,44 +23,22 @@
         app:layout_constraintStart_toEndOf="@+id/button_to_clipboard"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
+    <include
+        android:id="@+id/include2"
+        layout="@layout/part_color_method"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:checkedButton="@id/radioButton_dominate"
-        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_to_clipboard">
+        app:layout_constraintTop_toBottomOf="@+id/button_to_clipboard" />
 
-        <RadioButton
-            android:id="@+id/radioButton_dominate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Dominate Color" />
-
-        <RadioButton
-            android:id="@+id/radioButton_random"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Random Color" />
-
-        <RadioButton
-            android:id="@+id/radioButton_vibrant"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Vibrant Color" />
-    </RadioGroup>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
+    <include
+        layout="@layout/part_color_preview"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-        tools:listitem="@layout/item" />
+        app:layout_constraintTop_toBottomOf="@+id/include2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
