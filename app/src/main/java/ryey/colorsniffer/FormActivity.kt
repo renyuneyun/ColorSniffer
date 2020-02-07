@@ -21,11 +21,13 @@ class FormActivity : AppCompatActivity(), FormFragment.ResultListener {
     }
 
     override fun onCompleted(
+        defaultColor: Int,
         coloringMethod: ColoringMethod,
         launcherActivityInfoList: List<LauncherActivityInfo>
     ) {
         Toast.makeText(this, "Form completed with coloring method <%s>".format(coloringMethod), Toast.LENGTH_LONG).show()
         val intent = Intent()
+        intent.putExtra(KEY_DEFAULT_COLOR, defaultColor)
         for (launcherActivityInfo in launcherActivityInfoList) {
             intent.putExtra(launcherActivityInfo.klass, ColoringMethod.color(launcherActivityInfo, coloringMethod))
         }
@@ -37,5 +39,9 @@ class FormActivity : AppCompatActivity(), FormFragment.ResultListener {
         Toast.makeText(this, "Form cancelled", Toast.LENGTH_LONG).show()
         setResult(Activity.RESULT_CANCELED)
         finish()
+    }
+
+    companion object {
+        const val KEY_DEFAULT_COLOR = "default_color_for_apps"
     }
 }

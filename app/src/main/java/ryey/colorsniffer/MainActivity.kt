@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             putToClipboard(text)
         }
 
-        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.radioButton_dominate -> {
                     adapter.coloringMethod = ColoringMethod.dominantColor

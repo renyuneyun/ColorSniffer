@@ -10,6 +10,7 @@ import ernestoyaquello.com.verticalstepperform.listener.StepperFormListener
 
 class FormFragment : Fragment(R.layout.fragment_form), StepperFormListener {
 
+    private val defaultColorStep = DefaultColorStep()
     private val coloringMethodStep = ColoringMethodStep()
     private val previewStep = PreviewStep(coloringMethodStep)
 
@@ -25,7 +26,7 @@ class FormFragment : Fragment(R.layout.fragment_form), StepperFormListener {
         // Find the form view, set it up and initialize it.
         val verticalStepperForm = view.findViewById<VerticalStepperFormView>(R.id.stepper_form)
         verticalStepperForm
-            .setup(this, coloringMethodStep, previewStep)
+            .setup(this, defaultColorStep, coloringMethodStep, previewStep)
             .includeConfirmationStep(false)
             .displayCancelButtonInLastStep(true)
             .init()
@@ -34,7 +35,7 @@ class FormFragment : Fragment(R.layout.fragment_form), StepperFormListener {
     }
 
     override fun onCompletedForm() {
-        resultListener?.onCompleted(coloringMethodStep.stepData, previewStep.adapter.items)
+        resultListener?.onCompleted(defaultColorStep.defaultColor, coloringMethodStep.stepData, previewStep.adapter.items)
     }
 
     override fun onCancelledForm() {
@@ -42,7 +43,11 @@ class FormFragment : Fragment(R.layout.fragment_form), StepperFormListener {
     }
 
     interface ResultListener {
-        fun onCompleted(coloringMethod: ColoringMethod, launcherActivityInfoList: List<LauncherActivityInfo>)
+        fun onCompleted(
+            defaultColor: Int,
+            coloringMethod: ColoringMethod,
+            launcherActivityInfoList: List<LauncherActivityInfo>
+        )
         fun onCancelled()
     }
 
