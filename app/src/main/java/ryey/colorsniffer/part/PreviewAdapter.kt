@@ -1,4 +1,4 @@
-package ryey.colorsniffer
+package ryey.colorsniffer.part
 
 import android.content.Context
 import android.content.Intent
@@ -11,12 +11,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import ryey.colorsniffer.ColoringMethod
+import ryey.colorsniffer.LauncherActivityInfo
+import ryey.colorsniffer.R
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class MyAdapter(val context: Context, coloringMethod: ColoringMethod) : RecyclerView.Adapter<MyViewHolder>() {
+class PreviewAdapter(val context: Context, coloringMethod: ColoringMethod = ColoringMethod.DEFAULT) : RecyclerView.Adapter<PreviewViewHolder>() {
 
     var coloringMethod: ColoringMethod = coloringMethod
         set(value) {
@@ -24,11 +27,8 @@ class MyAdapter(val context: Context, coloringMethod: ColoringMethod) : Recycler
             notifyDataSetChanged()
         }
     val items: ArrayList<LauncherActivityInfo>
-    var size: Int
-        private set
+    private var size: Int
     private val loadAppTask: LoadAppTask
-
-    constructor(context: Context): this(context, ColoringMethod.dominantColor)
 
     init {
         val pm = context.packageManager
@@ -42,20 +42,21 @@ class MyAdapter(val context: Context, coloringMethod: ColoringMethod) : Recycler
         }
         size = appList.size
         items = ArrayList(size)
-        loadAppTask = LoadAppTask(WeakReference(this))
+        loadAppTask =
+            LoadAppTask(WeakReference(this))
         loadAppTask.execute(appList)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PreviewViewHolder {
         val view: View = LayoutInflater.from(context).inflate(R.layout.item, parent, false)
-        return MyViewHolder(view)
+        return PreviewViewHolder(view)
     }
 
     override fun getItemCount(): Int {
         return size
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PreviewViewHolder, position: Int) {
         while (loadAppTask.curr < position) {
             Thread.sleep(500)  // TODO: fine grained wait (e.g. use lock)
         }
@@ -67,7 +68,7 @@ class MyAdapter(val context: Context, coloringMethod: ColoringMethod) : Recycler
         loadAppTask.waitForFinish()
     }
 
-    class LoadAppTask(private val adapter: WeakReference<MyAdapter>) : AsyncTask<List<ResolveInfo>, Drawable, Unit>() {
+    class LoadAppTask(private val adapter: WeakReference<PreviewAdapter>) : AsyncTask<List<ResolveInfo>, Drawable, Unit>() {
 
         var curr: Int = -1
             private set
@@ -80,7 +81,12 @@ class MyAdapter(val context: Context, coloringMethod: ColoringMethod) : Recycler
             val time1 = Date()
             for (app in appList[0]) {
                 adapter.get()?.let {
-                    it.items.add(LauncherActivityInfo(it.context, app.activityInfo))
+                    it.items.add(
+                        LauncherActivityInfo(
+                            it.context,
+                            app.activityInfo
+                        )
+                    )
                     curr++
                 }
             }

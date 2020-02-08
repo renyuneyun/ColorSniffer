@@ -2,29 +2,26 @@ package ryey.colorsniffer
 
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.RadioGroup
 import ernestoyaquello.com.verticalstepperform.Step
+import ryey.colorsniffer.part.ColoringMethodChoiceHelper
 
 class ColoringMethodStep: Step<ColoringMethod>("Choose coloring method") {
 
-    private var coloringMethod: ColoringMethod  = ColoringMethod.dominantColor
+    private lateinit var coloringMethodChoiceHelper: ColoringMethodChoiceHelper
 
     override fun createStepContentLayout(): View {
         val view = LayoutInflater.from(context).inflate(R.layout.part_color_method, null)
 
-        view.findViewById<RadioGroup>(R.id.radioGroup).setOnCheckedChangeListener { group, checkedId ->
-            for (pair in mapping) {
-                if (pair.second == checkedId) {
-                    coloringMethod = pair.first
-                }
-            }
-        }
+        coloringMethodChoiceHelper =
+            ColoringMethodChoiceHelper(
+                view.findViewById(R.id.radioGroup)
+            )
 
         return view
     }
 
     override fun getStepData(): ColoringMethod {
-        return coloringMethod
+        return coloringMethodChoiceHelper.coloringMethod
     }
 
     override fun isStepDataValid(stepData: ColoringMethod?): IsDataValid {
@@ -33,7 +30,7 @@ class ColoringMethodStep: Step<ColoringMethod>("Choose coloring method") {
     }
 
     override fun getStepDataAsHumanReadableString(): String {
-        return coloringMethod.toString()
+        return stepData.toString()
     }
 
     override fun onStepClosed(animated: Boolean) {
@@ -49,19 +46,7 @@ class ColoringMethodStep: Step<ColoringMethod>("Choose coloring method") {
     }
 
     override fun restoreStepData(data: ColoringMethod?) {
-        for (pair in mapping) {
-            if (pair.first == data) {
-                formView.findViewById<RadioGroup>(R.id.radioGroup).check(pair.second)
-                break
-            }
-        }
-    }
-
-    companion object {
-        val mapping = arrayOf(
-            ColoringMethod.dominantColor to R.id.radioButton_dominate,
-            ColoringMethod.random to R.id.radioButton_random,
-            ColoringMethod.vibrantColor to R.id.radioButton_vibrant
-        )
+        if (data != null)
+            coloringMethodChoiceHelper.coloringMethod = data
     }
 }

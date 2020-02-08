@@ -1,11 +1,14 @@
-package ryey.colorsniffer
+package ryey.colorsniffer.part
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import ryey.colorsniffer.ColoringMethod
+import ryey.colorsniffer.LauncherActivityInfo
+import ryey.colorsniffer.R
 
-class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class PreviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     val textView_appName: TextView = itemView.findViewById(R.id.textView_appName)
     val textView_className: TextView =  itemView.findViewById(R.id.textView_className)
@@ -16,7 +19,12 @@ class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         textView_appName.text = launcherActivityInfo.name
         textView_className.text = launcherActivityInfo.klass
         imageView_icon.setImageDrawable(launcherActivityInfo.icon)
-        imageView_color.setImageDrawable(ColoringMethod.colorDrawable(launcherActivityInfo, coloringMethod))
+        imageView_color.setImageDrawable(
+            ColoringMethod.colorDrawable(
+                launcherActivityInfo,
+                coloringMethod
+            )
+        )
     }
 
 }

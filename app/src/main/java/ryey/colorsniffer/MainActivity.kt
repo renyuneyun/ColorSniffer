@@ -9,39 +9,29 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.part_color_method.*
 import kotlinx.android.synthetic.main.part_color_preview.*
+import ryey.colorsniffer.part.ColoringMethodChoiceHelper
+import ryey.colorsniffer.part.PreviewViewHelper
 
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var previewViewHelper: PreviewViewHelper
+    private lateinit var coloringMethodChoiceHelper: ColoringMethodChoiceHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val adapter = MyAdapter(this)
-
-        recyclerView.adapter = adapter
+        coloringMethodChoiceHelper =
+            ColoringMethodChoiceHelper(radioGroup) { coloringMethod ->
+                previewViewHelper.coloringMethod = coloringMethod
+            }
+        previewViewHelper =
+            PreviewViewHelper(recyclerView)
 
         button_to_clipboard.setOnClickListener {
-            adapter.waitForFinish()
-            val text = appListToTSV(adapter.items)
+            val text = appListToTSV(previewViewHelper.getColoringInfo())
             putToClipboard(text)
-        }
-
-        radioGroup.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.radioButton_dominate -> {
-                    adapter.coloringMethod = ColoringMethod.dominantColor
-                }
-                R.id.radioButton_random -> {
-                    adapter.coloringMethod = ColoringMethod.random
-                }
-                R.id.radioButton_vibrant -> {
-                    adapter.coloringMethod = ColoringMethod.vibrantColor
-                }
-                else -> {
-                    throw IllegalStateException("Unknown RadioButton for coloring method")
-                }
-            }
         }
 
         button_form.setOnClickListener {
@@ -51,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun putToClipboard(text: String) {
+    private fun putToClipboard(text: String) {
         val clipboardManager: ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clipData = ClipData.newPlainText(LABEL_CLIPBOARD_DATA, text)
         clipboardManager.setPrimaryClip(clipData)

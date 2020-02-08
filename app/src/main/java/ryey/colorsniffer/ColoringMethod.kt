@@ -17,6 +17,8 @@ enum class ColoringMethod {
 
     companion object {
 
+        val DEFAULT = dominantColor
+
         private val defaultColor = ResourcesCompat.getColor(Resources.getSystem(), android.R.color.black, null)
 
         fun color(launcherActivityInfo: LauncherActivityInfo, coloringMethod: ColoringMethod): Int {
