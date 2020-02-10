@@ -30,7 +30,7 @@ class FormActivity : AppCompatActivity(), FormFragment.ResultListener {
         val colorBundle = Bundle()
         colorBundle.putInt(KEY_DEFAULT_COLOR, defaultColor)
         for (launcherActivityInfo in launcherActivityInfoList) {
-            colorBundle.putInt(launcherActivityInfo.klass, ColoringMethod.color(launcherActivityInfo, coloringMethod))
+            colorBundle.putInt(launcherActivityInfo.packageName, ColoringMethod.color(launcherActivityInfo, coloringMethod))
         }
         intent.putExtra(KEY_COLOR_BUNDLE, colorBundle)
         setResult(Activity.RESULT_OK, intent)

@@ -48,7 +48,7 @@ class PreviewAdapter(val context: Context, coloringMethod: ColoringMethod = Colo
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PreviewViewHolder {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.item, parent, false)
+        val view: View = LayoutInflater.from(context).inflate(R.layout.item_preview, parent, false)
         return PreviewViewHolder(view)
     }
 

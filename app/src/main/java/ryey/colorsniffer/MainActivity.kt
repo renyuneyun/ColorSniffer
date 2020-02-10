@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         fun appListToTSV(launcherActivityInfos: List<LauncherActivityInfo>): String {
             val buf = StringBuilder()
             for (app in launcherActivityInfos) {
-                buf.append("%s\t%X\n".format(app.name, ColoringMethod.color(app, ColoringMethod.dominantColor)))
+                buf.append("%s\t#%X\n".format(app.packageName, ColoringMethod.color(app, ColoringMethod.dominantColor)))
             }
             return buf.toString()
         }

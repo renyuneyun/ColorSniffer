@@ -24,8 +24,9 @@ The exact plan to store the data differs by the method, but there are something 
 
 - The `activityId` is the `ActivityInfo.name` value
 	- It is `packageName.ActivityName`
+- The `packageName` is the `ActivityInfo.packageName` value
 - The `color` is an `Integer` and corresponds to the value returned from `ColorDrawable.color`
-	- It is in the form of `AARRGGBB`
+	- It is in the form of `AARRGGBB` (bitwise)
 
 
 ### Clipboard
@@ -33,11 +34,12 @@ The exact plan to store the data differs by the method, but there are something 
 It uses [TSV](https://en.wikipedia.org/wiki/Tab-separated_values). The header of the table is (not included in the exported data):
 
 ```
-activityId	HexColor
+packageName	#HexColor
 ```
 
-- The `activityId` is defined above
-- The `HexColor` is the `String` hex representation of the `color` (returned from `ColorDrawable.color`) and formatted with `%X`
+- The `packageName` is defined above
+- The `#HexColor` is the `String` hex representation of the `color` (returned from `ColorDrawable.color`) and formatted with `#%X`
+	- It starts with `#`
 	- It ought to be in CAPITAL
 	- It ought to have **8** (hex) digits
 
@@ -45,7 +47,7 @@ activityId	HexColor
 
 The information is stored in the `Bundle extras` of the `Intent`:
 
-- Each `activityId` is the key
+- Each `packageName` is the key
 - Each `color` is the value
 
 ## TODO
