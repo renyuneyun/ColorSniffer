@@ -47,10 +47,13 @@ packageName	#HexColor
 
 ### Intent
 
-The information is stored in the `Bundle extras` of the `Intent`:
+The information is stored in a `Bundle`, using the following method:
 
-- Each `packageName` is the key
-- Each `color` is the value
+- `"color_bundle"`: `Bundle` where in the `Bundle`:
+	- `packageName`: `color`
+- `"default_color_for_apps"`: `color` (`int`)
+
+That means, the `Bundle` stores the colors of each app in a nested `Bundle` (with key `color_bundle`), using `packageName` as key and `color` as value; the `Bundle` also contains a key `default_color_for_apps` whose value is a color representing the default color (for all apps not in the list).
 
 ## TODO
 
