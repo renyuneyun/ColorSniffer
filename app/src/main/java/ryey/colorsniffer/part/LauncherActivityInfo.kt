@@ -1,4 +1,4 @@
-package ryey.colorsniffer
+package ryey.colorsniffer.part
 
 import android.content.Context
 import android.content.pm.ActivityInfo

@@ -30,8 +30,12 @@ class MainActivity : AppCompatActivity() {
             PreviewViewHelper(recyclerView)
 
         button_to_clipboard.setOnClickListener {
-            val text = appListToTSV(previewViewHelper.getColoringInfo())
-            putToClipboard(text)
+            val coloringResult = ColoringResult(
+                -1,
+                coloringMethodChoiceHelper.coloringMethod,
+                previewViewHelper.getColoringInfo()
+            )
+            putToClipboard(coloringResult.asTSV())
         }
 
         button_form.setOnClickListener {
@@ -49,13 +53,5 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val LABEL_CLIPBOARD_DATA = "app_color_list"
-
-        fun appListToTSV(launcherActivityInfos: List<LauncherActivityInfo>): String {
-            val buf = StringBuilder()
-            for (app in launcherActivityInfos) {
-                buf.append("%s\t#%X\n".format(app.packageName, ColoringMethod.color(app, ColoringMethod.dominantColor)))
-            }
-            return buf.toString()
-        }
     }
 }

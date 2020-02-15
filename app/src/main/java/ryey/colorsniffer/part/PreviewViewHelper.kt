@@ -3,7 +3,6 @@ package ryey.colorsniffer.part
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import ryey.colorsniffer.ColoringMethod
-import ryey.colorsniffer.LauncherActivityInfo
 import kotlin.math.roundToInt
 
 class PreviewViewHelper(private val recyclerView: RecyclerView, coloringMethod: ColoringMethod = ColoringMethod.DEFAULT, fixedHeight: Boolean = false) {

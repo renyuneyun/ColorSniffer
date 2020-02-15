@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
+import ryey.colorsniffer.part.LauncherActivityInfo
 import java.util.*
 
 

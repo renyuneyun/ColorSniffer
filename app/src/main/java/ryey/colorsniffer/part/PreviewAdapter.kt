@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ryey.colorsniffer.ColoringMethod
-import ryey.colorsniffer.LauncherActivityInfo
 import ryey.colorsniffer.R
 import java.lang.ref.WeakReference
 import java.util.*

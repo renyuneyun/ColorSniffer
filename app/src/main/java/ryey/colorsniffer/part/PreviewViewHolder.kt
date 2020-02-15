@@ -5,7 +5,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ryey.colorsniffer.ColoringMethod
-import ryey.colorsniffer.LauncherActivityInfo
 import ryey.colorsniffer.R
 
 class PreviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
