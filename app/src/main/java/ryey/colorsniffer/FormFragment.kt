@@ -15,6 +15,7 @@ class FormFragment : Fragment(R.layout.fragment_form), StepperFormListener {
     private val previewStep = PreviewStep(coloringMethodStep)
 
     var resultListener: ResultListener? = null
+    var initialDataSource: InitialDataSource? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +35,20 @@ class FormFragment : Fragment(R.layout.fragment_form), StepperFormListener {
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initialDataSource?.get()?.run {
+            defaultColor?.let {
+                defaultColorStep.defaultColorHelper.defaultColor = it
+            }
+//            TODO: the following
+//            color?.let {
+//
+//            }
+        }
+
+        super.onViewCreated(view, savedInstanceState)
+    }
+
     override fun onCompletedForm() {
         resultListener?.onCompleted(
             ColoringResult(
@@ -51,6 +66,10 @@ class FormFragment : Fragment(R.layout.fragment_form), StepperFormListener {
     interface ResultListener {
         fun onCompleted(coloringResult: ColoringResult)
         fun onCancelled()
+    }
+
+    interface InitialDataSource {
+        fun get(): ColoringResult.Partial?
     }
 
 }

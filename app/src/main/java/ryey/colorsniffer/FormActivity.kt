@@ -7,16 +7,22 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
-class FormActivity : AppCompatActivity(), FormFragment.ResultListener {
+class FormActivity : AppCompatActivity(), FormFragment.ResultListener, FormFragment.InitialDataSource {
+
+    private var initialColoring: ColoringResult.Partial? = null
 
     override fun onAttachFragment(fragment: Fragment) {
         if (fragment is FormFragment) {
             fragment.resultListener = this
+            fragment.initialDataSource = this
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initialColoring = intent.extras?.let {
+            ColoringResult.Partial.fromExtras(it)
+        }
         setContentView(R.layout.activity_form)
     }
 
@@ -32,5 +38,9 @@ class FormActivity : AppCompatActivity(), FormFragment.ResultListener {
         Toast.makeText(this, "Form cancelled", Toast.LENGTH_LONG).show()
         setResult(Activity.RESULT_CANCELED)
         finish()
+    }
+
+    override fun get(): ColoringResult.Partial? {
+        return initialColoring
     }
 }
