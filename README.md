@@ -63,3 +63,20 @@ That means, the `Bundle` stores the colors of each app in a nested `Bundle` (wit
 - [ ] Support coloring apps by groups (user-defined or imported / from clipboard)
 - [ ] Support a more intuitive workflow to set app colors (i.e. choose how and what to change in this app and then call Last Launcher to set colors)
 
+## License
+
+Copyright 2020 renyuneyun (Rui Zhao)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
