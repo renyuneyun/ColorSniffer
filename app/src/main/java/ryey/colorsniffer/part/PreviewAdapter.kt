@@ -79,20 +79,29 @@ class PreviewAdapter(val context: Context, coloringMethod: ColoringMethod = Colo
             Log.d("BGLoad", "loading app list")
             val time1 = Date()
             for (app in appList[0]) {
-                adapter.get()?.let {
-                    it.items.add(
-                        LauncherActivityInfo(
-                            it.context,
-                            app.activityInfo
+                if (app.activityInfo.iconResource != 0) {
+                    adapter.get()?.let {
+                        it.items.add(
+                            LauncherActivityInfo(
+                                it.context,
+                                app.activityInfo
+                            )
                         )
-                    )
-                    curr++
+                        curr++
+                    }
                 }
             }
             finished.open()
             val time2 = Date()
             Log.d("BGLoad", "loaded app list, %d ms elapsed".format(time2.time - time1.time))
 
+        }
+
+        override fun onPostExecute(result: Unit?) {
+            adapter.get()?.let {
+                it.size = curr
+                it.notifyDataSetChanged()
+            }
         }
 
         fun waitForFinish() {
