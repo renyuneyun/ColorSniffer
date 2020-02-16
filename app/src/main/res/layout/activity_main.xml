@@ -18,7 +18,8 @@
         android:id="@+id/button_form"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Open Form"
+        android:text="Test Form"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_to_clipboard"
         app:layout_constraintTop_toTopOf="parent" />
