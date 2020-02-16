@@ -1,22 +1,28 @@
 package ryey.colorsniffer.part
 
+import android.content.res.Resources
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import ryey.colorsniffer.ColoringMethod
 import kotlin.math.roundToInt
 
-class PreviewViewHelper(private val recyclerView: RecyclerView, coloringMethod: ColoringMethod = ColoringMethod.DEFAULT, fixedHeight: Boolean = false) {
+class PreviewViewHelper(
+    private val recyclerView: RecyclerView,
+    fixedHeight: Boolean = false,
+    initialDefaultColor: Int = ResourcesCompat.getColor(
+        Resources.getSystem(),
+        android.R.color.black,
+        null
+    ),
+    initialColoringMethod: ColoringMethod = ColoringMethod.DEFAULT
+) {
 
-    var coloringMethod = coloringMethod
-        set(value) {
-            field = value
-            adapter.coloringMethod = coloringMethod
-        }
-    var adapter: PreviewAdapter
+    private var adapter: PreviewAdapter
 
     init {
         recyclerView.context.let { context ->
-            adapter = PreviewAdapter(context, coloringMethod)
+            adapter = PreviewAdapter(context, initialColoringMethod, initialDefaultColor)
             if (fixedHeight) {
                 recyclerView.updateLayoutParams {
                     height = context.resources.displayMetrics.let {
@@ -27,6 +33,13 @@ class PreviewViewHelper(private val recyclerView: RecyclerView, coloringMethod: 
             recyclerView.adapter = adapter
         }
     }
+
+    var coloringMethod
+        get() = adapter.coloringMethod
+        set(value) {adapter.coloringMethod = value}
+    var defaultColor
+        get() = adapter.defaultColor
+        set(value) {adapter.defaultColor = value}
 
     fun getColoringInfo(): List<LauncherActivityInfo> {
         adapter.waitForFinish()

@@ -9,13 +9,15 @@ class LauncherActivityInfo {
     val packageName: String
     val label: CharSequence
     val klass: String
-    val icon: Drawable
+    val hasIcon: Boolean
+    val icon: Drawable // The icon of the activity/app, or the system default icon
 
     constructor(context: Context, activityInfo: ActivityInfo) {
         val pm = context.packageManager
         packageName = activityInfo.packageName
         label = activityInfo.loadLabel(pm)
         klass = activityInfo.name
+        hasIcon = activityInfo.iconResource != 0
         icon = activityInfo.loadIcon(pm)
     }
 }

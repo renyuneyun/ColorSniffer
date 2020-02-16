@@ -1,9 +1,7 @@
 package ryey.colorsniffer
 
-import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
 import ryey.colorsniffer.part.LauncherActivityInfo
@@ -20,27 +18,37 @@ enum class ColoringMethod {
 
         val DEFAULT = dominantColor
 
-        private val defaultColor = ResourcesCompat.getColor(Resources.getSystem(), android.R.color.black, null)
+        private fun colorPalette(launcherActivityInfo: LauncherActivityInfo): Palette {
+            return Palette.from(launcherActivityInfo.icon.toBitmap()).generate()
+        }
 
-        fun color(launcherActivityInfo: LauncherActivityInfo, coloringMethod: ColoringMethod): Int {
+        fun color(launcherActivityInfo: LauncherActivityInfo, coloringMethod: ColoringMethod, defaultColor: Int): Int {
+            val colorOrDefault = fun (extract : (Palette) -> Int): Int {
+                return if (!launcherActivityInfo.hasIcon)
+                    defaultColor
+                else
+                    extract(colorPalette(launcherActivityInfo))
+            }
             return when (coloringMethod) {
                 dominantColor -> {
-                    val p = Palette.from(launcherActivityInfo.icon.toBitmap()).generate()
-                    p.getDominantColor(defaultColor)
+                    colorOrDefault {
+                        it.getDominantColor(defaultColor)
+                    }
                 }
                 random -> {
                     val rnd = Random()
                     Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
                 }
                 vibrantColor -> {
-                    val p = Palette.from(launcherActivityInfo.icon.toBitmap()).generate()
-                    p.getVibrantColor(defaultColor)
+                    colorOrDefault {
+                        it.getVibrantColor(defaultColor)
+                    }
                 }
             }
         }
 
-        fun colorDrawable(launcherActivityInfo: LauncherActivityInfo, coloringMethod: ColoringMethod): ColorDrawable {
-            return ColorDrawable(color(launcherActivityInfo, coloringMethod))
+        fun colorDrawable(launcherActivityInfo: LauncherActivityInfo, coloringMethod: ColoringMethod, defaultColor: Int): ColorDrawable {
+            return ColorDrawable(color(launcherActivityInfo, coloringMethod, defaultColor))
         }
     }
 }

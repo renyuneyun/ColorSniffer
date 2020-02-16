@@ -15,7 +15,7 @@ class PreviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val imageView_icon: ImageView = itemView.findViewById(R.id.imageView_icon)
     val imageView_color: ImageView = itemView.findViewById(R.id.imageView_color)
 
-    fun fillWith(launcherActivityInfo: LauncherActivityInfo, coloringMethod: ColoringMethod) {
+    fun fillWith(launcherActivityInfo: LauncherActivityInfo, coloringMethod: ColoringMethod, defaultColor: Int) {
         textView_appName.text = launcherActivityInfo.label
         textView_packageName.text = launcherActivityInfo.packageName
         textView_className.text = launcherActivityInfo.klass
@@ -23,7 +23,8 @@ class PreviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         imageView_color.setImageDrawable(
             ColoringMethod.colorDrawable(
                 launcherActivityInfo,
-                coloringMethod
+                coloringMethod,
+                defaultColor
             )
         )
     }

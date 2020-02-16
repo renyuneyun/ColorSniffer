@@ -16,7 +16,7 @@ class ColoringResult(
     ) : this(defaultColor, coloringMethod, HashMap<String, Int>().apply {
         for (launcherActivityInfo in launcherActivityInfoList) {
             this[launcherActivityInfo.packageName] =
-                ColoringMethod.color(launcherActivityInfo, coloringMethod)
+                ColoringMethod.color(launcherActivityInfo, coloringMethod, defaultColor)
         }
     }
     )

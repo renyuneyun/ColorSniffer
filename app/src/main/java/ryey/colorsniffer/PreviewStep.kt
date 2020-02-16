@@ -5,7 +5,15 @@ import android.view.View
 import ernestoyaquello.com.verticalstepperform.Step
 import ryey.colorsniffer.part.PreviewViewHelper
 
-class PreviewStep(private val coloringMethodStep: ColoringMethodStep) : Step<Unit>("Preview coloring") {
+class PreviewStep(
+    private val defaultColorStep: DefaultColorStep,
+    private val coloringMethodStep: ColoringMethodStep
+) : Step<Unit>("Preview coloring") {
+
+    val coloringMethod
+        get() = coloringMethodStep.stepData
+    val defaultColor
+        get() = defaultColorStep.stepData
 
     lateinit var previewViewHelper: PreviewViewHelper
         private set
@@ -28,11 +36,11 @@ class PreviewStep(private val coloringMethodStep: ColoringMethodStep) : Step<Uni
     override fun createStepContentLayout(): View {
         val view = LayoutInflater.from(context).inflate(R.layout.part_color_preview, null)
 
-        val coloringMethod = coloringMethodStep.stepData
         previewViewHelper = PreviewViewHelper(
             view.findViewById(R.id.recyclerView),
-            coloringMethod,
-            true
+            true,
+            defaultColor,
+            coloringMethod
         )
 
         return view
@@ -42,7 +50,8 @@ class PreviewStep(private val coloringMethodStep: ColoringMethodStep) : Step<Uni
     }
 
     override fun onStepOpened(animated: Boolean) {
-        previewViewHelper.coloringMethod = coloringMethodStep.stepData
+        previewViewHelper.defaultColor = defaultColor
+        previewViewHelper.coloringMethod = coloringMethod
     }
 
     override fun onStepMarkedAsUncompleted(animated: Boolean) {

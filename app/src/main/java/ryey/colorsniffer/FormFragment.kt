@@ -12,7 +12,7 @@ class FormFragment : Fragment(R.layout.fragment_form), StepperFormListener {
 
     private val defaultColorStep = DefaultColorStep()
     private val coloringMethodStep = ColoringMethodStep()
-    private val previewStep = PreviewStep(coloringMethodStep)
+    private val previewStep = PreviewStep(defaultColorStep, coloringMethodStep)
 
     var resultListener: ResultListener? = null
     var initialDataSource: InitialDataSource? = null

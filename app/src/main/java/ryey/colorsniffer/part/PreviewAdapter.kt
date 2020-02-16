@@ -18,14 +18,23 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class PreviewAdapter(val context: Context, coloringMethod: ColoringMethod = ColoringMethod.DEFAULT) : RecyclerView.Adapter<PreviewViewHolder>() {
+class PreviewAdapter(
+    val context: Context,
+    coloringMethod: ColoringMethod,
+    defaultColor: Int
+) : RecyclerView.Adapter<PreviewViewHolder>() {
 
-    var coloringMethod: ColoringMethod = coloringMethod
+    internal var coloringMethod: ColoringMethod = coloringMethod
         set(value) {
             field = value
             notifyDataSetChanged()
         }
-    val items: ArrayList<LauncherActivityInfo>
+    internal var defaultColor: Int = defaultColor
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+    internal val items: ArrayList<LauncherActivityInfo>
     private var size: Int
     private val loadAppTask: LoadAppTask
 
@@ -60,7 +69,7 @@ class PreviewAdapter(val context: Context, coloringMethod: ColoringMethod = Colo
             Thread.sleep(500)  // TODO: fine grained wait (e.g. use lock)
         }
         val launcherActivityInfo: LauncherActivityInfo = items[position]
-        holder.fillWith(launcherActivityInfo, coloringMethod)
+        holder.fillWith(launcherActivityInfo, coloringMethod, defaultColor)
     }
 
     fun waitForFinish() {
@@ -79,16 +88,14 @@ class PreviewAdapter(val context: Context, coloringMethod: ColoringMethod = Colo
             Log.d("BGLoad", "loading app list")
             val time1 = Date()
             for (app in appList[0]) {
-                if (app.activityInfo.iconResource != 0) {
-                    adapter.get()?.let {
-                        it.items.add(
-                            LauncherActivityInfo(
-                                it.context,
-                                app.activityInfo
-                            )
+                adapter.get()?.let {
+                    it.items.add(
+                        LauncherActivityInfo(
+                            it.context,
+                            app.activityInfo
                         )
-                        curr++
-                    }
+                    )
+                    curr++
                 }
             }
             finished.open()
