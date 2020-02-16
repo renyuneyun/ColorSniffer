@@ -9,13 +9,21 @@ import ryey.colorsniffer.R
 
 class PreviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    val textView_appName: TextView = itemView.findViewById(R.id.textView_appName)
-    val textView_className: TextView =  itemView.findViewById(R.id.textView_className)
-    val textView_packageName: TextView =  itemView.findViewById(R.id.textView_packageName)
-    val imageView_icon: ImageView = itemView.findViewById(R.id.imageView_icon)
-    val imageView_color: ImageView = itemView.findViewById(R.id.imageView_color)
+    private val textView_appName: TextView = itemView.findViewById(R.id.textView_appName)
+    private val textView_className: TextView =  itemView.findViewById(R.id.textView_className)
+    private val textView_packageName: TextView =  itemView.findViewById(R.id.textView_packageName)
+    private val imageView_icon: ImageView = itemView.findViewById(R.id.imageView_icon)
+    private val imageView_color: ImageView = itemView.findViewById(R.id.imageView_color)
 
-    fun fillWith(launcherActivityInfo: LauncherActivityInfo, coloringMethod: ColoringMethod, defaultColor: Int) {
+    internal var visible = true
+        set(value) {
+            field = value
+            itemView.visibility = if (value) View.VISIBLE else View.GONE
+        }
+
+    internal fun fillWith(launcherActivityInfo: LauncherActivityInfo, coloringMethod: ColoringMethod, defaultColor: Int) {
+        if (!visible)
+            return
         textView_appName.text = launcherActivityInfo.label
         textView_packageName.text = launcherActivityInfo.packageName
         textView_className.text = launcherActivityInfo.klass

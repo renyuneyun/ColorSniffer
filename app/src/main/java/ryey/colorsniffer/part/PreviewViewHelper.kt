@@ -16,7 +16,8 @@ class PreviewViewHelper(
         android.R.color.black,
         null
     ),
-    initialColoringMethod: ColoringMethod = ColoringMethod.DEFAULT
+    initialColoringMethod: ColoringMethod = ColoringMethod.DEFAULT,
+    ignoreAppsWithoutIcons: Boolean = false
 ) {
 
     private var adapter: PreviewAdapter
@@ -31,6 +32,7 @@ class PreviewViewHelper(
                     }
                 } //FIXME: temporary workaround. See https://github.com/ernestoyaquello/VerticalStepperForm/issues/88
             }
+            adapter.ignoreAppsWithoutIcon = ignoreAppsWithoutIcons
             recyclerView.adapter = adapter
         }
     }
@@ -48,7 +50,7 @@ class PreviewViewHelper(
             coloringMethod,
             adapter.run {
                 waitForFinish()
-                items
+                visibleItems
             }
         )
     }

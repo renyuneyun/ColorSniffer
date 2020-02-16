@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
                 previewViewHelper.coloringMethod = coloringMethod
             }
         previewViewHelper =
-            PreviewViewHelper(recyclerView)
+            PreviewViewHelper(recyclerView, ignoreAppsWithoutIcons = true)
 
         button_to_clipboard.setOnClickListener {
             val coloringResult = previewViewHelper.getColoringResult()

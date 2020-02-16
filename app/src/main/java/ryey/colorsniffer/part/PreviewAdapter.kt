@@ -34,8 +34,27 @@ class PreviewAdapter(
             field = value
             notifyDataSetChanged()
         }
-    internal val items: ArrayList<LauncherActivityInfo>
-    private var size: Int
+
+    private val items: ArrayList<LauncherActivityInfo>
+    internal val visibleItems: ArrayList<LauncherActivityInfo>
+    internal var ignoreAppsWithoutIcon = false
+        set(value) {
+            if (field == value)
+                return
+            field = value
+            loadAppTask.waitForFinish()
+            visibleItems.clear()
+            if (value) {
+                for (info in items) {
+                    if (info.hasIcon)
+                        visibleItems.add(info)
+                }
+            } else {
+                visibleItems.addAll(items)
+            }
+            notifyDataSetChanged()
+        }
+
     private val loadAppTask: LoadAppTask
 
     init {
@@ -48,8 +67,10 @@ class PreviewAdapter(
             Collections.sort(appList, ResolveInfo.DisplayNameComparator(pm))
             appList
         }
-        size = appList.size
-        items = ArrayList(size)
+        appList.size.let { size ->
+            items = ArrayList(size)
+            visibleItems = ArrayList(size)
+        }
         loadAppTask =
             LoadAppTask(WeakReference(this))
         loadAppTask.execute(appList)
@@ -61,14 +82,14 @@ class PreviewAdapter(
     }
 
     override fun getItemCount(): Int {
-        return size
+        return visibleItems.size
     }
 
     override fun onBindViewHolder(holder: PreviewViewHolder, position: Int) {
         while (loadAppTask.curr < position) {
             Thread.sleep(500)  // TODO: fine grained wait (e.g. use lock)
         }
-        val launcherActivityInfo: LauncherActivityInfo = items[position]
+        val launcherActivityInfo: LauncherActivityInfo = visibleItems[position]
         holder.fillWith(launcherActivityInfo, coloringMethod, defaultColor)
     }
 
@@ -88,13 +109,14 @@ class PreviewAdapter(
             Log.d("BGLoad", "loading app list")
             val time1 = Date()
             for (app in appList[0]) {
-                adapter.get()?.let {
-                    it.items.add(
-                        LauncherActivityInfo(
-                            it.context,
-                            app.activityInfo
-                        )
-                    )
+                adapter.get()?.run {
+                    LauncherActivityInfo(
+                        context,
+                        app.activityInfo
+                    ).let {
+                        items.add(it)
+                        visibleItems.add(it) // This works because of the lock (and wait)
+                    }
                     curr++
                 }
             }
@@ -102,13 +124,6 @@ class PreviewAdapter(
             val time2 = Date()
             Log.d("BGLoad", "loaded app list, %d ms elapsed".format(time2.time - time1.time))
 
-        }
-
-        override fun onPostExecute(result: Unit?) {
-            adapter.get()?.let {
-                it.size = curr
-                it.notifyDataSetChanged()
-            }
         }
 
         fun waitForFinish() {
