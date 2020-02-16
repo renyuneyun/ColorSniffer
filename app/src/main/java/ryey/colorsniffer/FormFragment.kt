@@ -50,13 +50,7 @@ class FormFragment : Fragment(R.layout.fragment_form), StepperFormListener {
     }
 
     override fun onCompletedForm() {
-        resultListener?.onCompleted(
-            ColoringResult(
-                defaultColorStep.stepData,
-                coloringMethodStep.stepData,
-                previewStep.previewViewHelper.getColoringInfo()
-            )
-        )
+        resultListener?.onCompleted(previewStep.previewViewHelper.getColoringResult())
     }
 
     override fun onCancelledForm() {

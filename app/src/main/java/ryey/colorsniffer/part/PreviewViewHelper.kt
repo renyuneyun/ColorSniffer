@@ -5,6 +5,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import ryey.colorsniffer.ColoringMethod
+import ryey.colorsniffer.ColoringResult
 import kotlin.math.roundToInt
 
 class PreviewViewHelper(
@@ -41,9 +42,15 @@ class PreviewViewHelper(
         get() = adapter.defaultColor
         set(value) {adapter.defaultColor = value}
 
-    fun getColoringInfo(): List<LauncherActivityInfo> {
-        adapter.waitForFinish()
-        return adapter.items
+    fun getColoringResult(): ColoringResult {
+        return ColoringResult(
+            defaultColor,
+            coloringMethod,
+            adapter.run {
+                waitForFinish()
+                items
+            }
+        )
     }
 
     companion object {

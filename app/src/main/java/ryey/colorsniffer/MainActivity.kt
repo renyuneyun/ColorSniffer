@@ -30,11 +30,7 @@ class MainActivity : AppCompatActivity() {
             PreviewViewHelper(recyclerView)
 
         button_to_clipboard.setOnClickListener {
-            val coloringResult = ColoringResult(
-                -1,
-                coloringMethodChoiceHelper.coloringMethod,
-                previewViewHelper.getColoringInfo()
-            )
+            val coloringResult = previewViewHelper.getColoringResult()
             putToClipboard(coloringResult.asTSV())
         }
 
