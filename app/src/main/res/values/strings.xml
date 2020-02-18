@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">ColorSniffer</string>
+
+    <string name="text_copy_to_clipboard">Copy to Clipboard</string>
+    <string name="text_test_form">Test Form</string>
+    <string name="text_app_name">appName</string>
+    <string name="text_package_name">packageName</string>
+    <string name="text_class_name">className</string>
+    <string name="pic_desc_icon">Icon</string>
+    <string name="pic_desc_color">Color</string>
+    <string name="button_text_dominate_color">Dominate Color</string>
+    <string name="button_text_random_color">Random Color</string>
+    <string name="button_text_vibrant_color">Vibrant Color</string>
+    <string name="text_default_color">Default Color</string>
+    <string name="pic_desc_default_color_preview">Default color preview</string>
+    <string name="title_choose_coloring_method">Choose coloring method</string>
+    <string name="title_default_color">Default color</string>
+    <string name="title_preview">Preview coloring</string>
 </resources>

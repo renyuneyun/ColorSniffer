@@ -10,7 +10,7 @@
         android:id="@+id/button_to_clipboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Copy to Clipboard"
+        android:text="@string/text_copy_to_clipboard"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -18,7 +18,7 @@
         android:id="@+id/button_form"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Test Form"
+        android:text="@string/text_test_form"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_to_clipboard"

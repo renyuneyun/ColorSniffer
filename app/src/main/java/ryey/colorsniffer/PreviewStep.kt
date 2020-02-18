@@ -1,14 +1,16 @@
 package ryey.colorsniffer
 
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import ernestoyaquello.com.verticalstepperform.Step
 import ryey.colorsniffer.part.PreviewViewHelper
 
 class PreviewStep(
+    resources: Resources,
     private val defaultColorStep: DefaultColorStep,
     private val coloringMethodStep: ColoringMethodStep
-) : Step<Unit>("Preview coloring") {
+) : Step<Unit>(resources.getString(R.string.title_preview)) {
 
     val coloringMethod
         get() = coloringMethodStep.stepData

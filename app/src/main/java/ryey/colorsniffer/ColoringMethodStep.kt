@@ -1,11 +1,12 @@
 package ryey.colorsniffer
 
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import ernestoyaquello.com.verticalstepperform.Step
 import ryey.colorsniffer.part.ColoringMethodChoiceHelper
 
-class ColoringMethodStep: Step<ColoringMethod>("Choose coloring method") {
+class ColoringMethodStep(resources: Resources): Step<ColoringMethod>(resources.getString(R.string.title_choose_coloring_method)) {
 
     private lateinit var coloringMethodChoiceHelper: ColoringMethodChoiceHelper
 

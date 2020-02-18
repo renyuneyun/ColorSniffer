@@ -1,11 +1,12 @@
 package ryey.colorsniffer
 
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import ernestoyaquello.com.verticalstepperform.Step
 import ryey.colorsniffer.part.DefaultColorHelper
 
-class DefaultColorStep : Step<Int>("Default color") {
+class DefaultColorStep(resources: Resources) : Step<Int>(resources.getString(R.string.title_default_color)) {
 
     lateinit var defaultColorHelper: DefaultColorHelper
 

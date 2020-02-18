@@ -1,5 +1,6 @@
 package ryey.colorsniffer
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +11,19 @@ import ernestoyaquello.com.verticalstepperform.listener.StepperFormListener
 
 class FormFragment : Fragment(R.layout.fragment_form), StepperFormListener {
 
-    private val defaultColorStep = DefaultColorStep()
-    private val coloringMethodStep = ColoringMethodStep()
-    private val previewStep = PreviewStep(defaultColorStep, coloringMethodStep)
+    private lateinit var defaultColorStep: DefaultColorStep
+    private lateinit var coloringMethodStep: ColoringMethodStep
+    private lateinit var previewStep: PreviewStep
 
     var resultListener: ResultListener? = null
     var initialDataSource: InitialDataSource? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        defaultColorStep = DefaultColorStep(resources)
+        coloringMethodStep = ColoringMethodStep(resources)
+        previewStep = PreviewStep(resources, defaultColorStep, coloringMethodStep)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

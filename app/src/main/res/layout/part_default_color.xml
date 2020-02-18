@@ -15,7 +15,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Default Color:"
+        android:text="@string/text_default_color"
         tools:layout_conversion_absoluteHeight="19dp"
         tools:layout_conversion_absoluteWidth="58dp"
         tools:layout_editor_absoluteX="0dp"
@@ -30,5 +30,5 @@
         tools:layout_conversion_absoluteWidth="24dp"
         tools:layout_editor_absoluteX="58dp"
         tools:layout_editor_absoluteY="0dp"
-        android:contentDescription="Preview of default Color" />
+        android:contentDescription="@string/pic_desc_default_color_preview" />
 </LinearLayout>

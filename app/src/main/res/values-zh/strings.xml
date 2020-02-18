@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ColorSniffer</string>
+    <string name="button_text_dominate_color">主色</string>
+    <string name="button_text_random_color">隨機</string>
+    <string name="button_text_vibrant_color">醒目色</string>
+    <string name="pic_desc_color">顏色</string>
+    <string name="pic_desc_icon">圖標</string>
+    <string name="pic_desc_default_color_preview">默認顏色預覽</string>
+    <string name="text_app_name">應用名</string>
+    <string name="text_class_name">類名</string>
+    <string name="text_copy_to_clipboard">複製到剪貼板</string>
+    <string name="text_default_color">默認顏色</string>
+    <string name="text_package_name">包名</string>
+    <string name="text_test_form">測試表單</string>
+    <string name="title_choose_coloring_method">選擇配色方式</string>
+    <string name="title_default_color">默認顏色</string>
+    <string name="title_preview">預覽配色</string>
+</resources>
