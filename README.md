@@ -20,40 +20,59 @@ You can copy/export the color scheme from the app to the clipboard, and paste/im
 
 On an app which requires the color scheme, you can do a `startActivityForResult()` call to the `ryey.colorsniffer.FormActivity`, and listen to its result (through `onActivityResult()`). The color scheme will be passed with the `Intent`.
 
-## Data format
+## Output data format
 
 The exact plan to store the data differs by the method, but there are something in common:
 
-- The `activityId` is the `ActivityInfo.name` value
-	- It is `packageName.ActivityName`
+- The `launcherId` is in the form of `appId/activityId`:
+   - `appId` is the application id, extracted from `ActivityInfo.packageName`
+   - `activityId` is the (fully-quantified) activity name, extracted from `ActivityInfo.name`
 - The `packageName` is the `ActivityInfo.packageName` value
 - The `color` is an `Integer` and corresponds to the value returned from `ColorDrawable.color`
-	- It is in the form of `AARRGGBB` (bitwise)
+   - It is in the form of `AARRGGBB` (bitwise)
 
+Note the data formats may change, based on the discussion between the author of Last Launcher and me (watch the issues).
 
 ### Clipboard
 
 It uses [TSV](https://en.wikipedia.org/wiki/Tab-separated_values). The header of the table is (not included in the exported data):
 
 ```
-packageName	#HexColor
+launcherId	#HexColor
 ```
 
-- The `packageName` is defined above
+- The `launcherId` is defined above
 - The `#HexColor` is the `String` hex representation of the `color` (returned from `ColorDrawable.color`) and formatted with `#%X`
-	- It starts with `#`
-	- It ought to be in CAPITAL
-	- It ought to have **8** (hex) digits
+   - It starts with `#`
+   - It ought to be in CAPITAL
+   - It ought to have **8** (hex) digits
 
 ### Intent
 
 The information is stored in a `Bundle`, using the following method:
 
 - `"color_bundle"`: `Bundle` where in the `Bundle`:
-	- `packageName`: `color`
-- `"default_color_for_apps"`: `color` (`int`)
+   - `launcherId`: `color`
+   - `"default_color_for_apps"`: `color` (`int`)
 
 That means, the `Bundle` stores the colors of each app in a nested `Bundle` (with key `color_bundle`), using `packageName` as key and `color` as value; the `Bundle` also contains a key `default_color_for_apps` whose value is a color representing the default color (for all apps not in the list).
+
+## Potential future changes of data format
+
+### (Input) Accept the "current" color
+
+Last Launcher may add (using the same way as ColorSniffer outputs) an extra `Bundle` in the `Intent` to specify the current app colors.
+
+This is to be done after ColorSniffer has the ability to "ignore" apps.
+
+### (Output) `Intent`-based passing
+
+For the `Intent`-based method, I'm hoping to change it to the following:
+
+- `"color_bundle"`: `Bundle` where in the `Bundle`:
+   - `launcherId`: `color`
+- `"default_color_for_apps"`: `color` (`int`)
+
 
 ## TODO
 
