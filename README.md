@@ -1,10 +1,12 @@
 # ColorSniffer
 
-------
-
 Get and export color codings for your apps.
 
 This app is intended to be used as a companion app for [Last Launcher](https://github.com/SubhamTyagi/Last-Launcher), as a easy method to obtain custom while regular coloring of apps.
+
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/ryey.colorsniffer/)
 
 [Download from the release page.](https://github.com/renyuneyun/ColorSniffer/releases)
 
